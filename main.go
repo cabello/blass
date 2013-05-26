@@ -40,9 +40,9 @@ func bench() {
 
             filter := bloom.New(int(n), p)
 
-            results["M Bytes"] = float64(filter.BitTotal >> 3)
+            results["M Bytes"] = float64(filter.GetSizeInBytes())
 
-            fmt.Fprintf(w, "%v\t", float64(filter.BitTotal >> 3))
+            fmt.Fprintf(w, "%v\t", filter.GetSizeInBytes())
 
             falseNegative := 0.0;
             falsePositive := 0.0;
