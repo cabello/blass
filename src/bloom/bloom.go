@@ -1,10 +1,9 @@
 package bloom
 
 import (
-	// "crypto/sha256"
+	"crypto/sha256"
 	"math"
 	"math/big"
-	"mmh3"
 )
 
 type Filter struct {
@@ -55,35 +54,21 @@ func (f *Filter) Contains(key []byte) bool {
 	return true
 }
 
-// using murmurhash
 func (f *Filter) generateHashForKey(key []byte) []byte {
 	var completeHash []byte
+	var hash = sha256.New()
 
-	completeHash = mmh3.Hash128(key)
+	hash.Write(key)
+	completeHash = append(completeHash, hash.Sum(nil)...)
 
 	for f.chunkSize*f.hashFunctions > len(completeHash) {
-		completeHash = append(completeHash, mmh3.Hash128(completeHash)...)
+		hash.Reset()
+		hash.Write(completeHash)
+		completeHash = append(completeHash, hash.Sum(nil)...)
 	}
 
 	return completeHash
 }
-
-// // using sha256
-// func (f *Filter) generateHashForKey(key []byte) []byte {
-// 	var completeHash []byte
-// 	var hash = sha256.New()
-
-// 	hash.Write(key)
-// 	completeHash = append(completeHash, hash.Sum(nil)...)
-
-// 	for f.chunkSize*f.hashFunctions > len(completeHash) {
-// 		hash.Reset()
-// 		hash.Write(completeHash)
-// 		completeHash = append(completeHash, hash.Sum(nil)...)
-// 	}
-
-// 	return completeHash
-// }
 
 func (f *Filter) findBitArrayIndexAndMask(hash []byte, index int) (bitArrayIndex uint64, mask byte) {
  	var subHashInt big.Int
