@@ -6,50 +6,94 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strconv"
 )
 
-var filter bloom.Filter = bloom.New(100, 0.01)
+var filters map[string]bloom.Filter = make(map[string]bloom.Filter)
 
-func add(w http.ResponseWriter, r *http.Request) {
-	key := r.URL.Path[len("/add/"):]
+func createFilter(w http.ResponseWriter, r *http.Request) {
+	name := r.FormValue("name")
 
-	filter.Add([]byte(key))
-
-	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "/contains/%s", key)
-}
-
-func contains(w http.ResponseWriter, r *http.Request) {
-	key := r.URL.Path[len("/contains/"):]
-
-	if filter.Contains([]byte(key)) {
-		w.WriteHeader(http.StatusOK)
+	if _, ok := filters[name]; ok {
+		w.WriteHeader(http.StatusConflict)
 
 		return
 	}
 
-	w.WriteHeader(http.StatusNotFound)
-}
+	parsedCapacity, _ := strconv.ParseInt(r.FormValue("capacity"), 10, 0)
+	capacity := int(parsedCapacity)
+	errorRate, _ := strconv.ParseFloat(r.FormValue("errorRate"), 64)
 
-func createFilter(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "createFilter%+v\n", mux.Vars(r))
-	fmt.Fprintf(w, "name:%+v, capacity:%+v, errorRate:%+v\n", r.FormValue("name"), r.FormValue("capacity"), r.FormValue("errorRate"))
+	filters[name] = bloom.New(capacity, errorRate)
+	w.WriteHeader(http.StatusCreated)
 }
 
 func retrieveFilter(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "retrieveFilter %+v\n", mux.Vars(r))
+	vars := mux.Vars(r)
+	name := vars["filterName"]
+
+	filter, ok := filters[name]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "{ \"capacity\": %+v, \"errorRate\": %+v }\n", filter.Capacity, filter.ErrorRate)
 }
 
 func deleteFilter(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "deleteFilter %+v\n", mux.Vars(r))
+	vars := mux.Vars(r)
+	name := vars["filterName"]
+
+	if _, ok := filters[name]; !ok {
+		w.WriteHeader(http.StatusNotFound)
+
+		return
+	}
+
+	delete(filters, name)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func createEntry(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "createEntry %+v\n", mux.Vars(r))
+	vars := mux.Vars(r)
+	filterName := vars["filterName"]
+	entryName := r.FormValue("name")
+
+	filter, ok := filters[filterName]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+
+		return
+	}
+
+	filter.Add([]byte(entryName))
+	w.WriteHeader(http.StatusCreated)
 }
 
 func retrieveEntry(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "retrieveEntry %+v\n", mux.Vars(r))
+	vars := mux.Vars(r)
+	filterName := vars["filterName"]
+	entryName := vars["entryName"]
+
+	filter, ok := filters[filterName]
+	if !ok {
+		w.WriteHeader(http.StatusBadRequest)
+
+		return
+	}
+
+	if !filter.Contains([]byte(entryName)) {
+		w.WriteHeader(http.StatusNotFound)
+
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	return
 }
 
 func ListenAndServe(address string) {

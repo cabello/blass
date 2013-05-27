@@ -7,6 +7,8 @@ import (
 )
 
 type Filter struct {
+	Capacity      int
+	ErrorRate     float64
 	bitTotal      uint64
 	bitArray      []byte
 	hashFunctions int
@@ -20,6 +22,8 @@ func New(capacity int, errorRate float64) Filter {
 	chunkSize := int(math.Ceil(math.Log2(float64(bitTotal)) / 8))
 
 	return Filter{
+		capacity,
+		errorRate,
 		bitTotal,
 		bitArray,
 		hashFunctions,
