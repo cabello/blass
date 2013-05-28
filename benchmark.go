@@ -57,8 +57,8 @@ func benchmark(capacityBase, capacityPowStart, capacityPowEnd float64) {
 }
 
 func main() {
-	// from capacity 10 ^ 1 to 10 ^ 6
-	benchmark(10.0, 1.0, 6.0)
 	// from capacity 2 ^4 to 2 ^ 16
 	benchmark(2.0, 4.0, 16.0)
+	// from capacity 10 ^ 1 to 10 ^ 6
+	benchmark(10.0, 1.0, 6.0)
 }
