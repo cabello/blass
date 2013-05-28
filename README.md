@@ -1,5 +1,14 @@
 # bloom-as-a-service
 
+## Instructions
+
+It's simple: clone, set the GOPATH and run the service. 
+
+    $ git clone git@github.com:cabello/bloom-as-a-service.git
+    $ cd bloom-as-a-service
+    $ . envsetup.sh
+    $ go run service.go
+
 ## API
 
 ### Create bloom filter
