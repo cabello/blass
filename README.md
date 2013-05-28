@@ -6,9 +6,9 @@
 
 Parameters: 
 
-- name
-- capacity
-- errorRate
+- name, the name you gonna use to create and check for entries, ex: spammers
+- capacity, how many records do you plan to insert on bloom filter, ex: 100000
+- errorRate, the chance of the filter making a mistake when checking for an entry, ex: 0.01 (1%)
 
 Returns:
 
@@ -19,7 +19,7 @@ Returns:
 
 Parameters: 
 
-- None
+- filterName (on URL), the name you used to create the filter
 
 Returns:
 
@@ -30,7 +30,7 @@ Returns:
 
 Parameters:
 
-- None
+- filterName (on URL), the name you used to create the filter
 
 Returns:
 
@@ -42,7 +42,7 @@ Returns:
 
 Parameters:
 
-- name
+- name, the name you gonna use to check if the entry is on your bloom filter
 
 Returns:
 
@@ -54,7 +54,8 @@ Returns:
 
 Parameters:
 
-- None
+- filterName (on URL), the name you used to create the filter
+- entryName (on URL), the name you use to create the entry on the bloom filter
 
 Returns:
 
