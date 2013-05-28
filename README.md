@@ -7,7 +7,9 @@ It's simple: clone, set the GOPATH and run the service.
     $ git clone git@github.com:cabello/bloom-as-a-service.git
     $ cd bloom-as-a-service
     $ . envsetup.sh
-    $ go run service.go
+    $ go run server.go
+    
+The filters you create and the entries you add will be held on memory.
 
 ## API
 
