@@ -65,7 +65,7 @@ func createEntry(w http.ResponseWriter, r *http.Request) {
 
 	filter, ok := filters[filterName]
 	if !ok {
-		w.WriteHeader(http.StatusNotFound)
+		w.WriteHeader(http.StatusBadRequest)
 
 		return
 	}
