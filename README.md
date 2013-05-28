@@ -1,11 +1,8 @@
-bloom-as-a-service
-==================
+# bloom-as-a-service
 
-API
----
+## API
 
-`POST /v1/filters`
----------------------------
+### `POST /v1/filters`
 
 Parameters: 
 
@@ -18,8 +15,7 @@ Returns:
 - 201 Created
 - 409 Conflict
 
-`GET /v1/filters/{filterName}`
----------------------------
+### `GET /v1/filters/{filterName}`
 
 Parameters: 
 
@@ -30,8 +26,7 @@ Returns:
 - 200 OK, JSON with `capacity` and `errorRate`
 - 404 Not Found
 
-`DELETE /v1/filters/{filterName}`
----------------------------
+### `DELETE /v1/filters/{filterName}`
 
 Parameters:
 
@@ -43,8 +38,7 @@ Returns:
 - 404 Not Found
 
 
-`POST /v1/filters/{filterName}/entries`
----------------------------
+### `POST /v1/filters/{filterName}/entries`
 
 Parameters:
 
@@ -56,8 +50,7 @@ Returns:
 - 400 Bad Request
 
 
-`GET /v1/filters/{filterName}/entries/{entryName}`
----------------------------
+### `GET /v1/filters/{filterName}/entries/{entryName}`
 
 Parameters:
 
