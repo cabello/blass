@@ -2,13 +2,12 @@
 
 ## Instructions
 
-It's simple: clone, set the GOPATH and run the service. 
+It's simple: clone, set the GOPATH and run the service.
 
-    $ git clone git@github.com:cabello/bloom-as-a-service.git
-    $ cd bloom-as-a-service
-    $ . envsetup.sh
-    $ go run server.go
-    
+    $ go get github.com/gorilla/mux
+    $ cd $GOPATH/github.com/cabello/bloom-as-a-service
+    $ go run server/server.go
+
 The filters you create and the entries you add will be held on memory.
 
 ## API
@@ -17,7 +16,7 @@ The filters you create and the entries you add will be held on memory.
 
 Endpoint: `POST /v1/filters`
 
-Parameters: 
+Parameters:
 
 - `name`, the name you gonna use to create and check for entries, ex: spammers
 - `capacity`, how many records do you plan to insert on bloom filter, ex: 100000
@@ -32,7 +31,7 @@ Returns:
 
 Endpoint: `GET /v1/filters/{filterName}`
 
-Parameters: 
+Parameters:
 
 - `filterName` (on URL), the name you used to create the filter
 
