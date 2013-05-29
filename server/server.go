@@ -1,7 +1,7 @@
 package main
 
 import (
-    "service"
+    "github.com/cabello/bloom-as-a-service"
 )
 
 func main() {

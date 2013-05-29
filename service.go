@@ -1,7 +1,7 @@
 package service
 
 import (
-	"bloom"
+	"github.com/cabello/bloom"
 	"fmt"
 	"github.com/gorilla/mux"
 	"log"
