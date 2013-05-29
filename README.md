@@ -4,7 +4,7 @@
 
 It's simple: clone, set the GOPATH and run the service.
 
-    $ go get github.com/gorilla/mux
+    $ go get github.com/cabello/bloom-as-a-service
     $ cd $GOPATH/github.com/cabello/bloom-as-a-service
     $ go run server/server.go
 
