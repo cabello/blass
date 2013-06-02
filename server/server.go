@@ -4,9 +4,9 @@
 package main
 
 import (
-    "github.com/cabello/bloom-as-a-service"
+    "github.com/cabello/blass"
 )
 
 func main() {
-    service.ListenAndServe(":8080")
+    blass.ListenAndServe(":8080")
 }

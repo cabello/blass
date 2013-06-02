@@ -1,4 +1,6 @@
-# bloom-as-a-service
+# blass
+
+Bloom filters as a service.
 
 ## Instructions
 

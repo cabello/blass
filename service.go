@@ -1,7 +1,7 @@
 // Copyright (c) 2013, Danilo Cabello.
 // Use of this source code is governed by LICENSE file.
 
-package service
+package blass
 
 import (
 	"github.com/cabello/bloom"
