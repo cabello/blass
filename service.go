@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-var filters map[string]bloom.Filter = make(map[string]bloom.Filter)
+var filters map[string]*bloom.Filter = make(map[string]*bloom.Filter)
 
 func createFilter(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
