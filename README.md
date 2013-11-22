@@ -6,8 +6,8 @@ Bloom filters as a service.
 
 It's simple: clone, set the GOPATH and run the service.
 
-    $ go get github.com/cabello/bloom-as-a-service
-    $ cd $GOPATH/github.com/cabello/bloom-as-a-service
+    $ go get github.com/cabello/blass
+    $ cd $GOPATH/src/github.com/cabello/blass
     $ go run server/server.go
 
 The filters you create and the entries you add will be held on memory.
